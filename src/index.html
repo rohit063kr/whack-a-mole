@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wack the mole</title>
+    <link rel="stylesheet" href="assets/style.scss">
+    <script defer src="assets/script.js"></script>
+</head>
+<body>
+    <div class="game">
+      <div class="game__score">Score:  <span class="score">121</span></div>
+      <div class="game__high-score">High score:  <span class="high-score">121</span></div>
+    </div>
+
+    <span class="timer">00:00</span>
+
+    <div class="box__main">
+        <div class="box__sub"></div>
+        <div class="box__sub"></div>
+        <div class="box__sub"></div>
+        <div class="box__sub"></div>
+        <div class="box__sub"></div>
+        <div class="box__sub"></div>
+        <div class="box__sub"></div>
+        <div class="box__sub"></div>
+        <div class="box__sub"></div>
+        <div class="box__sub"></div>
+        <div class="box__sub"></div>
+        <div class="box__sub box__active"></div>
+    </div>
+
+    <div>
+      <button type="button" class="btn btn__start">Start</button>
+      <button type="button" class="btn btn__end">End</button>
+    </div>
+
+    <div class="popup">
+      <ul class="popup__list">
+        <li class="popup__list-item">This is a small game build by rohit kumar for practicing his javascript skill.</li>
+        <li class="popup__list-item">You have given 2 minute, whack as much as mole as you can.</li>
+        <li class="popup__list-item">Each mole hold 1 score.</li>
+        <li class="popup__list-item">Your hight score will be saved to locally.</li>
+      </ul>
+      <div class="popup__info">
+        <select class="popup__select">
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+        <h3 class="popup__score-info">Your high score is <h1 class="popup__high-score">44</h1></h3>
+      </div>
+
+      <button type="button" class="popup__btn">Got it!</button>
+    </div>
+
+    <div class="overlay"></div>
+</body>
+</html>

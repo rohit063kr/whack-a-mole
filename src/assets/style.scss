@@ -1,0 +1,139 @@
+html{
+    font-size:62.5%;
+    box-sizing:border-box;
+}
+
+*,
+*::before,
+*::after{
+    box-sizing: inherit;
+    margin:0;
+    padding:0;
+}
+
+body{
+    background:rgba(83, 37, 37, 0.767);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height:100vh;
+    font-family: sans-serif;
+    position:relative;
+}
+
+.box{
+    &__main{
+        width:50%;
+        height:60vh;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 1.5rem;
+        border:2rem solid rgb(230, 78, 78);
+        padding: 3rem;
+        box-shadow:0 0 19px 0px #333333ad;
+        margin:4rem 0;
+    }
+
+    &__sub{
+        background: rgba(#000, .6);
+        border-radius: 50%;
+        border:2px solid #000;
+    }
+
+    &__active{
+        background: url(Mole.png) center center;
+        background-size:cover;
+        cursor: pointer;
+    }
+}
+
+.game{
+  position:absolute;
+  top:3rem;
+  left:3rem;
+  font-size:1.9rem;
+  color: purple;
+
+  & > *:not(:last-child){
+    margin-bottom:1rem;
+  }
+}
+
+.btn, .popup__btn{
+    padding:1.5rem 3rem;
+    border:0;
+    border-radius:5px;
+    background: purple;
+    color:#fff;
+    margin-right:1rem;
+    box-shadow: -3px 5px 5px 0 #00000070;
+    transform: translate(2px, -3px);
+    transition: all .3s;
+
+    &:active{
+      box-shadow: -2px 1px 2px 0 #00000070;
+      transform: translate(0, -0px);
+    }
+}
+
+.timer{
+  font-size:3rem;
+  color: goldenrod;
+}
+
+.popup{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  z-index:100;
+  background:rgba(#fff, .7);
+  padding:4rem 3rem;
+  border-radius: 5px;
+  width:max-content;
+
+  &__list{
+    list-style: square;
+    font-size: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  &__list-item{
+    margin-bottom:1rem;
+  }
+
+  &__score-info{
+    font-size:1.7rem;
+  }
+
+  &__info{
+    margin-top:3rem;
+  }
+
+  &__select{
+    margin-bottom:1rem;
+  }
+
+  &__btn{
+    position:absolute;
+    right:2rem;
+    bottom:1rem;
+    padding:1rem 3rem;
+  }
+}
+
+.overlay{
+    z-index: 50;
+    background: rgba(#000, .5);
+    position:absolute;
+    top:0;
+    left:0;
+    right: 0;
+    bottom:0;
+}
+
+.hidden{
+  opacity: 0;
+  z-index: -1;
+}
