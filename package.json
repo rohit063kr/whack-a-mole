@@ -1,11 +1,11 @@
 {
   "name": "WackTheMole-game",
   "version": "1.0.0",
-  "main": "index.js",
+  "default": "src/index.html",
   "license": "MIT",
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parce build src/index.html"
+    "build": "parcel build src/index.html --dist-dir ./dist"
   },
   "devDependencies": {
     "@parcel/transformer-image": "2.0.0-rc.0",
