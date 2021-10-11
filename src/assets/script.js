@@ -1,28 +1,35 @@
 const config = {
   easy: {
+    id:'easy',
+    highScore:0,
     moleInHoleSec: 1,
     time: 60,
   },
   medium: {
+    id:'medium',
+    highScore:0,
     moleInHoleSec: .7,
     time: 20,
   },
   hard: {
+    id:'hard',
+    highScore:0,
     moleInHoleSec: .5,
     time: 10,
   }
 };
 
-const highScores = {
-  easy: 20,
-  medium: 210,
-  hard: 310,
-}
+let highScores = [
+  {id:'easy', score:0},
+  {id:'medium',score:0},
+  {id:'hard',score:0}
+]
 
 
 const board = document.querySelector('.box__main');
 const scoreEl = document.querySelector('.score');
 const highScoreEl = document.querySelector('.high-score');
+const popupHighScore = document.querySelector('.popup__high-score');
 const timerEl = document.querySelector('.timer');
 
 const overlay = document.querySelector('.overlay');
@@ -36,18 +43,15 @@ const difficulty = document.querySelector('.popup__select');
 
 const moleHoles = Array.from(document.querySelectorAll('.box__sub'));
 
-let TIME,MOLE_IN_HOLE_SEC,timer, moleInterval;
-
-// Config
-// const MOLE_IN_HOLE_SEC = 1; // In seconds
-// let TIME = 10; // In seconds
+let TIME,MOLE_IN_HOLE_SEC,time,timer, moleInterval;
 
 const Game = class {
   _score = 0;
-  _highScore = 0;
-  _config;
+  _config = config.easy;
 
   constructor(){
+    this._loadGame();
+
     difficulty.addEventListener('change', this._showScore.bind(this));
 
     popupBtn.addEventListener('click', this._closePopup.bind(this));
@@ -68,10 +72,9 @@ const Game = class {
   }
 
   _endGame(){
-    if(this._score > this._highScore) this._saveGame();
 
+    if(this._score > this._config.highScore) this._saveGame();
     window.location.reload();
-    popup.prepend('<h3>Restart the game</h3>')
   }
 
   _init(){
@@ -79,12 +82,11 @@ const Game = class {
     MOLE_IN_HOLE_SEC = this._config.moleInHoleSec;
     this._score = 0;
 
-    this._loadGame();
-
     time = TIME;
     timerEl.textContent = this._formatTime(time);
     scoreEl.textContent = this._score;
-    highScoreEl.textContent = this._highScore;
+    highScoreEl.textContent = this._config.highScore;
+    popupHighScore.textContent = this._highScore;
   }
 
   _formatTime(time) {
@@ -144,33 +146,59 @@ const Game = class {
   }
 
   _saveGame(){
-    this._highScore = this._score;
+    if (this._score > this._config.highScore) this._config.highScore = this._score;
 
-    localStorage.setItem('wackTheMole', JSON.stringify(this._highScore));
+    highScores.forEach(el => {
+      if(el.id === this._config.id) el.score = this._config.highScore;
+    })
+
+    localStorage.setItem('wackTheMole', JSON.stringify(highScores));
   }
 
   _loadGame(){
     const data = JSON.parse(localStorage.getItem('wackTheMole'));
 
-    if(data) this._highScore = +data;
+    if(data)
+      highScores = data;
+
+      highScores.forEach(el => {
+        if(el.id === 'easy') config.easy.highScore = el.score;
+        if(el.id === 'medium') config.medium.highScore = el.score;
+        if(el.id === 'hard') config.hard.highScore = el.score;
+      })
+    popupHighScore.textContent = config.easy.highScore;
   }
 
   _closePopup() {
     overlay.classList.add('hidden');
     popup.classList.add('hidden');
 
-    if(difficulty.value === 'easy') this._config = config.easy;
-    if(difficulty.value === 'medium') this._config = config.medium;
-    if(difficulty.value === 'hard') this._config = config.hard;
+    this._configuration(difficulty);
+    // if(difficulty.value === 'easy') this._config = config.easy;
+    // if(difficulty.value === 'medium') this._config = config.medium;
+    // if(difficulty.value === 'hard') this._config = config.hard;
     this._init();
   }
 
   _showScore(e){
-    if(e.target.value === 'easy') this._highScore = highScores.easy;
-    if(e.target.value === 'medium') this._highScore = highScores.medium;
-    if(e.target.value === 'hard') this._highScore = highScores.hard;
+    this._configuration(e.target);
+    // if(e.target.value === 'easy') this._highScore = highScores.easy;
+    // if(e.target.value === 'medium') this._highScore = highScores.medium;
+    // if(e.target.value === 'hard') this._highScore = highScores.hard;
 
-    document.querySelector('.popup__high-score').textContent = this._highScore;
+    popupHighScore.textContent = this._config.highScore;
+  }
+
+  _configuration(el){
+    if(el.value === 'easy') {
+      this._config = config.easy;
+    }
+    if(el.value === 'medium') {
+      this._config = config.medium;
+    }
+    if(el.value === 'hard') {
+      this._config = config.hard;
+    }
   }
 };
 
